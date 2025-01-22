@@ -1,0 +1,19 @@
+.textarea {
+  border: 2px solid #007bff;
+  border-radius: 4px;
+  outline: none;
+  font-size: 1rem;
+  padding: 8px;
+  color: #333;
+  resize: vertical;
+  transition: border-color 0.2s ease;
+
+  &:focus {
+    border-color: #0056b3;
+  }
+
+  &::placeholder {
+    color: #aaa;
+    font-style: italic;
+  }
+}
