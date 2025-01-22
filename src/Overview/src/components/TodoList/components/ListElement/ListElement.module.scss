@@ -1,0 +1,64 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.5rem 0;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-right: 0.5rem; /* Abstand zum Trash-Icon */
+  background-color: #fff;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    background-color: #f0f0f0;
+    cursor: pointer;
+  }
+}
+
+.badge {
+  font-size: 14px;
+  font-weight: bold;
+  color: #155724;
+  background-color: #d4edda;
+  padding: 2px 6px;
+  border-radius: 12px;
+}
+
+.text {
+  font-size: 16px;
+  color: #333;
+}
+
+.trash {
+  margin-left: 0.5rem;
+  color: lightgray;
+  cursor: pointer;
+
+  &:hover {
+    color: red;
+  }
+}
+
+.checkedIcon {
+  color: lightgray;
+  cursor: pointer;
+
+  &:hover {
+    color: green;
+  }
+}
+.done {
+  color: darkgreen;
+}

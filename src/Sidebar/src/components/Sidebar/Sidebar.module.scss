@@ -1,0 +1,45 @@
+.container {
+  display: flex;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: -270px;
+  width: 250px;
+  height: 100vh;
+  background-color: lightcyan;
+  transition: right 0.3s ease-in-out;
+  border-left: 1px solid;
+  padding: 20px 20px 20px 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.open {
+  right: 0;
+}
+
+.content {
+  transition: margin-right 0.3s ease-in-out;
+}
+
+.rotatedText {
+  margin-left: -35px;
+  margin-right: 35px;
+  writing-mode: vertical-lr;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.h3 {
+  border-bottom: 2px solid #00bcd4;
+}
+
+.divider {
+  height: 1px;
+  background-color: #00bcd4;
+  margin: 1rem 0;
+  width: 100%;
+}
