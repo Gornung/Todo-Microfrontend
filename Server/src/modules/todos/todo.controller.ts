@@ -7,13 +7,16 @@ import {
   Body,
   Param,
   HttpCode,
+  Logger,
 } from '@nestjs/common';
-import { Todo } from '../../shared/types/todo';
+import { Todo } from 'shared/types/todo';
 import { todos } from './todoExamples';
 
 @Controller('todos')
 export class TodosController {
   constructor() {}
+
+  private readonly logger = new Logger(TodosController.name);
 
   @Get()
   async index(): Promise<Todo[]> {
@@ -49,9 +52,17 @@ export class TodosController {
 
   @Put(':id')
   async update(@Param('id') id: string, @Body() data: Todo): Promise<Todo> {
-    todos.map((todo) =>
+    const updatedTodos = todos.map((todo) =>
       todo.id === parseInt(id) ? { ...todo, ...data } : todo,
     );
+
+    // Ersetze das ursprüngliche Array durch die aktualisierten Todos
+    todos.length = 0;
+    todos.push(...updatedTodos);
+
+    this.logger.debug(`Update Request: ${JSON.stringify(data)}`);
+    this.logger.debug(`-----------------------------------------`);
+    this.logger.debug(`Updated Todos: ${JSON.stringify(todos)}`);
 
     return data;
   }
