@@ -1,0 +1,36 @@
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: -250px; /* Breite der Sidebar */
+  width: 250px;
+  height: 100vh;
+  background-color: white;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: right 0.3s ease-in-out;
+  padding: 20px;
+}
+
+.sidebar.open {
+  right: 0;
+}
+
+.content {
+  transition: margin-right 0.3s ease-in-out;
+}
+
+.content.shifted {
+  margin-right: 250px;
+}
+
+button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+  margin: 20px;
+}

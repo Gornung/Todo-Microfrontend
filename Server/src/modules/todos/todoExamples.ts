@@ -1,4 +1,4 @@
-import { Todo } from 'shared/types/todo';
+import { Todo } from 'shared-types';
 
 export const todos: Todo[] = [
   'NestJS',

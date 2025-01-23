@@ -9,7 +9,7 @@ const printCompilationMessage = require('./compilation.config.js');
 
 module.exports = (_, argv) => ({
   output: {
-    publicPath: 'http://localhost:3003/',
+    publicPath: 'http://localhost:3002/',
   },
 
   resolve: {
@@ -17,7 +17,7 @@ module.exports = (_, argv) => ({
   },
 
   devServer: {
-    port: 3003,
+    port: 3002,
     historyApiFallback: true,
     watchFiles: [path.resolve(__dirname, 'src')],
     onListening: function (devServer) {
@@ -55,16 +55,6 @@ module.exports = (_, argv) => ({
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
-          options: {
-            presets: [
-              '@babel/preset-env',
-              ['@babel/preset-react', { runtime: 'automatic' }],
-              '@babel/preset-typescript',
-            ],
-            plugins: [
-              ['@babel/plugin-transform-runtime', { regenerator: true }],
-            ],
-          },
         },
       },
     ],
@@ -72,22 +62,18 @@ module.exports = (_, argv) => ({
 
   plugins: [
     new ModuleFederationPlugin({
-      name: 'details',
+      name: 'sidebar',
       filename: 'remoteEntry.js',
-      remotes: {
-        portal: 'portal@http://localhost:3000/remoteEntry.js',
-        elements: 'elements@http://localhost:3001/remoteEntry.js',
+      remotes: {},
+      exposes: {
+        './Sidebar': './src/components/Sidebar/Sidebar.jsx',
+        './placeSidebar': './src/placeSidebar.js',
       },
-      exposes: {},
       shared: {
         ...deps,
-        react: {
+        'solid-js': {
           singleton: true,
-          requiredVersion: deps.react,
-        },
-        'react-dom': {
-          singleton: true,
-          requiredVersion: deps['react-dom'],
+          requiredVersion: deps['solid-js'],
         },
       },
     }),

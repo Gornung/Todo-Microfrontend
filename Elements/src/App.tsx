@@ -1,14 +1,15 @@
-// @ts-expect-error expecting explicit import
 import React from 'react';
-import './App.module.scss';
 import ReactDOM from 'react-dom/client';
 
 const App = () => {
-  return <>Hallo Details</>;
+  return (
+    <div className="container">
+      <div>elements Application</div>
+    </div>
+  );
 };
 
 const rootElement = document.getElementById('app');
-
 if (!rootElement) {
   throw new Error('Failed to find the root element');
 }

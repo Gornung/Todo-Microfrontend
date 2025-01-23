@@ -1,10 +1,9 @@
-// @ts-expect-error expecting explicit import
 import React from 'react';
 import './App.module.scss';
 import ReactDOM from 'react-dom/client';
 
 const App = () => {
-  return <>Hallo Details</>;
+  return <>Overview</>;
 };
 
 const rootElement = document.getElementById('app');

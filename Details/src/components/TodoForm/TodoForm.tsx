@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Input } from '../Input/Input';
-import { Textarea } from '../Textarea/Textarea';
-import { Todo } from '../../types';
-import TodosApi from 'app/TodosApi';
+import { CreateTodo, Todo } from 'shared-types';
+import { Button, Input, Textarea } from 'elements/Elements';
+
+import TodosApi from 'portal/TodosApi';
 
 import styles from './TodoForm.module.scss';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Button } from '../Button/Button';
 
 const { getTodoById, updateTodo, createTodo } = TodosApi;
 
-type TodoOption = Omit<Todo, 'id'> & { id?: number };
-
-const initTodo = {
+const initTodo: CreateTodo = {
   title: '',
   description: '',
   done: false,
@@ -20,7 +17,7 @@ const initTodo = {
 };
 
 export const TodoForm = (): React.JSX.Element => {
-  const [todo, setTodo] = useState<TodoOption>(initTodo);
+  const [todo, setTodo] = useState<CreateTodo>(initTodo);
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -53,7 +50,7 @@ export const TodoForm = (): React.JSX.Element => {
   };
 
   const handleChange =
-    (field: keyof TodoOption) =>
+    (field: keyof CreateTodo) =>
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       setTodo((prev) => ({
         ...(prev || initTodo),
@@ -68,12 +65,16 @@ export const TodoForm = (): React.JSX.Element => {
           className={styles.title}
           placeholder="Titel der Aufgabe"
           value={todo.title}
-          onChange={(e) => handleChange('title')(e)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            handleChange('title')(e)
+          }
         />
         <Textarea
           placeholder="Beschreibung der Aufgabe"
           value={todo.description || ''}
-          onChange={(e) => handleChange('description')(e)}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+            handleChange('description')(e)
+          }
         />
       </div>
       <div className={styles.buttonContainer}>

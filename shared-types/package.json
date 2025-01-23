@@ -1,0 +1,19 @@
+{
+  "name": "shared-types",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "description": "",
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "typescript": "^4.5.2"
+  },
+  "dependencies": {
+    "react": "^19.0.0"
+  }
+}

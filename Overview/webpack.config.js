@@ -9,7 +9,7 @@ const printCompilationMessage = require('./compilation.config.js');
 
 module.exports = (_, argv) => ({
   output: {
-    publicPath: 'http://localhost:3003/',
+    publicPath: 'http://localhost:3005/',
   },
 
   resolve: {
@@ -17,7 +17,7 @@ module.exports = (_, argv) => ({
   },
 
   devServer: {
-    port: 3003,
+    port: 3005,
     historyApiFallback: true,
     watchFiles: [path.resolve(__dirname, 'src')],
     onListening: function (devServer) {
@@ -55,16 +55,6 @@ module.exports = (_, argv) => ({
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
-          options: {
-            presets: [
-              '@babel/preset-env',
-              ['@babel/preset-react', { runtime: 'automatic' }],
-              '@babel/preset-typescript',
-            ],
-            plugins: [
-              ['@babel/plugin-transform-runtime', { regenerator: true }],
-            ],
-          },
         },
       },
     ],
@@ -72,13 +62,15 @@ module.exports = (_, argv) => ({
 
   plugins: [
     new ModuleFederationPlugin({
-      name: 'details',
+      name: 'overview',
       filename: 'remoteEntry.js',
       remotes: {
         portal: 'portal@http://localhost:3000/remoteEntry.js',
         elements: 'elements@http://localhost:3001/remoteEntry.js',
       },
-      exposes: {},
+      exposes: {
+        './TodoList': './src/components/TodoList.tsx',
+      },
       shared: {
         ...deps,
         react: {

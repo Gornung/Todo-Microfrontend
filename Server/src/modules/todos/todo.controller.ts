@@ -9,7 +9,7 @@ import {
   HttpCode,
   Logger,
 } from '@nestjs/common';
-import { Todo } from 'shared/types/todo';
+import { Todo } from 'shared-types';
 import { todos } from './todoExamples';
 
 @Controller('todos')
