@@ -17,6 +17,7 @@ const App = () => {
         <Container>
           <Routes>
             <Route path="/todo/:id" element={<TodoForm />}></Route>
+            <Route path="/todo/new" element={<TodoForm />}></Route>
           </Routes>
         </Container>
         <Footer />

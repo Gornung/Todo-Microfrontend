@@ -5,6 +5,7 @@ import cs from 'classnames';
 interface ButtonProps {
   children: React.ReactNode;
   onClick?: () => void;
+  onSave?: () => Promise<void>;
   className?: string;
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
@@ -14,6 +15,7 @@ interface ButtonProps {
 export const Button = ({
   children,
   onClick,
+  onSave,
   className,
   type = 'button',
   disabled = false,
@@ -23,11 +25,20 @@ export const Button = ({
     [styles.disabled]: disabled,
   });
 
+  const handleClick = async () => {
+    if (onSave) {
+      await onSave();
+    }
+    if (onClick) {
+      onClick();
+    }
+  };
+
   return (
     <button
       type={type}
       className={buttonClass}
-      onClick={onClick}
+      onClick={handleClick}
       disabled={disabled}
     >
       {children}

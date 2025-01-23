@@ -5,26 +5,61 @@ import { Todo } from '../../types';
 import TodosApi from 'app/TodosApi';
 
 import styles from './TodoForm.module.scss';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from '../Button/Button';
 
-const { getTodoById } = TodosApi;
+const { getTodoById, updateTodo, createTodo } = TodosApi;
 
-export const TodoForm = (): React.JSX.Element | null => {
-  const [todo, setTodo] = useState<Todo | null>(null);
+type TodoOption = Omit<Todo, 'id'> & { id?: number };
+
+const initTodo = {
+  title: '',
+  description: '',
+  done: false,
+  active: true,
+};
+
+export const TodoForm = (): React.JSX.Element => {
+  const [todo, setTodo] = useState<TodoOption>(initTodo);
+
+  const navigate = useNavigate();
   const { id } = useParams();
 
   useEffect(() => {
     if (id) {
-      getTodoById(id).then(setTodo);
-    } else {
-      setTodo(null);
+      getTodoById(id).then((fetchedTodo: Todo) => {
+        setTodo(fetchedTodo || initTodo);
+      });
     }
-  }, []);
+  }, [id]);
 
-  if (!todo) {
-    return null;
-  }
+  const handleBack = () => {
+    navigate(-1);
+  };
+
+  const handleSave = async () => {
+    if (todo?.title) {
+      if (id) {
+        await updateTodo(id, todo as Todo);
+        console.log('Todo updated:', todo);
+      } else {
+        const newTodo = await createTodo(todo as Omit<Todo, 'id'>);
+        console.log('Todo created:', newTodo);
+      }
+      // navigate(-1);
+    } else {
+      alert('Bitte einen Titel eingeben!');
+    }
+  };
+
+  const handleChange =
+    (field: keyof TodoOption) =>
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setTodo((prev) => ({
+        ...(prev || initTodo),
+        [field]: e.target.value,
+      }));
+    };
 
   return (
     <>
@@ -32,20 +67,20 @@ export const TodoForm = (): React.JSX.Element | null => {
         <Input
           className={styles.title}
           placeholder="Titel der Aufgabe"
-          onChange={(e) => setTodo({ ...todo, title: e.target.value })}
-        >
-          {todo.title}
-        </Input>
+          value={todo.title}
+          onChange={(e) => handleChange('title')(e)}
+        />
         <Textarea
           placeholder="Beschreibung der Aufgabe"
-          onChange={(e) => setTodo({ ...todo, description: e.target.value })}
-        >
-          {todo.description}
-        </Textarea>
+          value={todo.description || ''}
+          onChange={(e) => handleChange('description')(e)}
+        />
       </div>
       <div className={styles.buttonContainer}>
-        <Button>Speichern</Button>
-        <Button variant="secondary">Zurück</Button>
+        <Button onSave={handleSave}>Speichern</Button>
+        <Button variant="secondary" onClick={handleBack}>
+          Zurück
+        </Button>
       </div>
     </>
   );
